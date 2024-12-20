@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerar Relatório</title>
+    <style>
+        body {
+            display: flex;
+            background-color: #1a1a2e;
+            color: #ffffff;
+        }
+        .form-container, .preview-container {
+            width: 50%;
+            padding: 20px;
+        }
+        input, button, select {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+            padding: 8px;
+        }
+        button {
+            background-color: #ff5722;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Gerar relatório do investidor</h2>
+        <form id="reportForm" >
+            <label for="previousReading">Leitura anterior:</label>
+            <input type="date" id="previousReading" name="previousReading" required>
+            
+            <label for="currentReading">Leitura atual:</label>
+            <input type="date" id="currentReading" name="currentReading" required>
+            
+            <label for="nextReading">Próxima leitura:</label>
+            <input type="date" id="nextReading" name="nextReading" required>
+            
+            <label for="investorName">Nome do Investidor:</label>
+            <input type="text" id="investorName" name="investorName" required>
+            
+            <!-- Adicione mais campos conforme necessário -->
+            
+            <button type="submit"  onclick="gerarPDF()" id="btnGerarPDF" disabled>Gerar PDF</button>
+        </form>
+    </div>
+    <script>
+            function gerarPDF() {
+            
+            fetch('gerar_pdf.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'arquivo_gerado.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error('Erro ao gerar PDF:', error));
+        }
+    </script>
+</body>
+</html>
