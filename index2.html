@@ -131,7 +131,7 @@
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Valor do
                                 crédito em conta:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
-                                    name="valor_do_creadito_em_conta"></label><label
+                                    name="valor_do_creadito_em_conta"  id="valor-kwh-input"></label><label
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Valor do
                                 kWh:<input type="number" step=".0001" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
@@ -406,12 +406,12 @@
                     </text>
                     <rect width="840" height="295" x="354" y="243" fill="#E6E6E6" rx="10"></rect><text fill="#000"
                         style="white-space:pre" font-family="Inter" font-size="15" letter-spacing="0em">
-                        <tspan x="374" y="277.455">VALOR DO kWh</tspan>
+                        <tspan x="374" y="277.455" >VALOR DO kWh</tspan>
                     </text>
                     <rect width="390" height="44" x="374" y="290" fill="#fff" rx="10"></rect><text fill="#000"
                         style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
                         letter-spacing="0em">
-                        <tspan x="745" y="319.273" text-anchor="end">R$ <!-- -->0,0000</tspan>
+                        <tspan x="745" y="319.273" text-anchor="end" id="valor-kwh">R$ <!-- -->0,0000</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         letter-spacing="0em">
                         <tspan x="784" y="277.455">ENERGIA GERADA</tspan>
@@ -1209,6 +1209,12 @@
     <div id="loom-companion-mv3" ext-id="liecbddmkiiihnedobmlmillhodjkdmb">
         <section id="shadow-host-companion"></section>
     </div>
+    <script>
+            document.getElementById('valor-kwh-input').addEventListener('input', function (e) {
+        document.getElementById('valor-kwh').textContent = e.target.value ? `R$ ${e.target.value}` : 'R$ 0,0000';
+    });
+    </script>
 </body>
+
 
 </html>
