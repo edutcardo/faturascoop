@@ -1,26 +1,11 @@
-<html>
+<!DOCTYPE html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <meta name="next-head-count" content="2">
-    <link rel="preload" href="/_next/static/css/cd27e9777020b7c3.css" as="style">
-    <link rel="stylesheet" href="/_next/static/css/cd27e9777020b7c3.css" data-n-g="">
-    <link rel="preload" href="/_next/static/css/209bbe160a7c05f8.css" as="style">
-    <link rel="stylesheet" href="/_next/static/css/209bbe160a7c05f8.css" data-n-p=""><noscript data-n-css=""></noscript>
-    <script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script>
-    <script src="/_next/static/chunks/webpack-c491b2a411a4f8fa.js" defer=""></script>
-    <script src="/_next/static/chunks/framework-91d7f78b5b4003c8.js" defer=""></script>
-    <script src="/_next/static/chunks/main-83803dd478f5b5bc.js" defer=""></script>
-    <script src="/_next/static/chunks/pages/_app-b25b42cbf235e0d8.js" defer=""></script>
-    <script src="/_next/static/chunks/252f366e-19b211d1a5fdb0e3.js" defer=""></script>
-    <script src="/_next/static/chunks/bb02c0f2-797d1504d435b766.js" defer=""></script>
-    <script src="/_next/static/chunks/1644ddea-55643892a5564c93.js" defer=""></script>
-    <script src="/_next/static/chunks/854-3154764f18c57116.js" defer=""></script>
-    <script src="/_next/static/chunks/pages/index-f5268c5ebc28bf17.js" defer=""></script>
-    <script src="/_next/static/VkfEgDzcWtv8knHlQy63b/_buildManifest.js" defer=""></script>
-    <script src="/_next/static/VkfEgDzcWtv8knHlQy63b/_ssgManifest.js" defer=""></script>
-    <script src="/_next/static/VkfEgDzcWtv8knHlQy63b/_middlewareManifest.js" defer=""></script>
+
+
     <style type="text/css">
         @font-face {
             font-weight: 400;
@@ -56,7 +41,7 @@
         }
 
         .svg-section {
-            width: 70%;
+            width: 50%;
             background-color: #F8F9FA;
             display: flex;
             align-items: center;
@@ -103,7 +88,7 @@
         <div class="form-section">
             <h1>Gerar relatório do investidor</h1>
             <form>
-                <div class="w-full flex flex-wrap gap-2">Formulário<input type="date"
+                <div class="w-full flex flex-wrap gap-2">Leitura anterior:<input type="date"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
                                     name="leitura_anterior"></label><label
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Leitura
@@ -131,11 +116,11 @@
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Valor do
                                 crédito em conta:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
-                                    name="valor_do_creadito_em_conta"  id="valor-kwh-input"></label><label
+                                    name="valor_do_creadito_em_conta"></label><label
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Valor do
                                 kWh:<input type="number" step=".0001" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
-                                    name="valor_do_kwh"></label><label
+                                    name="valor_do_kwh" id="valor-kwh-input"></label><label
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Energia
                                 gerada:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
@@ -143,11 +128,11 @@
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Energia
                                 consumida pelo próprio investidor:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
-                                    name="energia_consumida_pelo_proprio_investidor"></label><label
+                                    name="energia_consumida_investidor"></label><label
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Energia enviada
                                 para os cooperados:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
-                                    name="energia_enviada_para_os_cooperados"></label><label
+                                    name="energia_enviada_cooperados"></label><label
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Total consumido
                                 pelos cooperados:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
@@ -155,7 +140,7 @@
                                 class="flex flex-col gap-2 py-2 text-white min-w-fit flex-1 max-w-[50%]">Total acumulado
                                 pelos cooperados:<input type="number" step=".01" min="0"
                                     class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
-                                    name="total_acumulado_pelos_cooperados"></label></div>
+                                    name="total_acumulado_cooperados"></label></div>
                         <div class="flex justify-between items-center gap-2 text-white text-[20px]">
                             <h1>Histórico de recebimento</h1><button type="button" class="text-[#00FF89]">Adicionar
                                 valor</button>
@@ -182,14 +167,14 @@
                             acumulado:<input type="number" step=".01" min="0"
                                 class="text-gray-600 py-1 px-3 rounded-lg outline-none w-full"
                                 name="retorno_acumulado"></label><button type="submit"
-                            class="flex items-center justify-center bg-[#Ff6600] rounded-lg p-2 text-white text-[20px]">Gerar
+                            class="flex" onclick="gerarPDF()">Gerar
                             PDF</button>
                     </form>
                 </aside>
 
             </div>
-            <div class="w-fit h-full p-5"><svg xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" width="inherit" height="inherit" fill="none"
+            <div class="fatura" id="faturaId"><svg xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" fill="none"
                     viewBox="0 0 1234 1579">
                     <path fill="#E6E6E6" d="M0 0H1234V1579H0z"></path>
                     <g transform="translate(20, 28)">
@@ -411,7 +396,7 @@
                     <rect width="390" height="44" x="374" y="290" fill="#fff" rx="10"></rect><text fill="#000"
                         style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
                         letter-spacing="0em">
-                        <tspan x="745" y="319.273" text-anchor="end" id="valor-kwh">R$ <!-- -->0,0000</tspan>
+                        <tspan x="860" y="319.273" text-anchor="end" id="valor-kwh">R$ <!-- -->0,0000</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         letter-spacing="0em">
                         <tspan x="784" y="277.455">ENERGIA GERADA</tspan>
@@ -1209,10 +1194,35 @@
     <div id="loom-companion-mv3" ext-id="liecbddmkiiihnedobmlmillhodjkdmb">
         <section id="shadow-host-companion"></section>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script>
-            document.getElementById('valor-kwh-input').addEventListener('input', function (e) {
-        document.getElementById('valor-kwh').textContent = e.target.value ? `R$ ${e.target.value}` : 'R$ 0,0000';
-    });
+    async function gerarPDF() {
+        // Aguarda o carregamento dos módulos UMD jsPDF
+        const { jsPDF } = window.jspdf;
+        
+        // Seleciona o elemento HTML que deseja capturar
+        const element = document.querySelector('.fatura');
+
+        // Converte o elemento HTML em um canvas
+        const canvas = await html2canvas(element);
+
+        // Obtém dados do canvas como URL da imagem
+        const imgData = canvas.toDataURL('image/png');
+
+        // Cria um novo documento PDF
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        // Adiciona a imagem ao PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+        // Salva o PDF com o nome especificado
+        pdf.save('fatura.pdf');
+    }
     </script>
 </body>
 

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="next-head-count" content="2">
+
+    <style type="text/css">
+        @font-face {
+            font-weight: 400;
+            font-style: normal;
+            font-family: circular;
+            src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/CircularXXWeb-Book.woff2') format('woff2');
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1D2B44;
+        }
+
+        * {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        }
+
+        .main {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .form {
+            width: 65%;
+            background-color: #28364A;
+            padding: 20px;
+            color: white;
+            overflow-y: auto;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .svg {
+            width: 35%;
+            background-color: #F8F9FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .svg svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #FF6600;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="form">
+            <h1>Gerar relatório do investidor</h1>
+            <form name="formulario">
+                <div class="full flex-wrap space">
+                    <label for="leitura_anterior" class="label">Leitura anterior:
+                        <input type="date" class="input" name="leitura_anterior" id="leitura_anterior">
+                    </label>
+                    <label for="leitura_atual" class="label">Leitura atual:
+                        <input type="date" class="input" name="leitura_atual" id="leitura_atual">
+                    </label>
+                    <label for="proxima_leitura" class="label">Próxima leitura:
+                        <input type="date" class="input" name="proxima_leitura" id="proxima_leitura">
+                    </label>
+                    <label for="nome_investidor" class="label">Nome do investidor:
+                        <input class="input" name="nome_investidor" id="nome_investidor">
+                    </label>
+                    <label for="mes_de_referencia" class="label">Mês de referência:
+                        <input type="month" class="input" name="mes_de_referencia" id="mes_de_referencia">
+                    </label>
+                    <label for="valor_locacao" class="label">Valor da locação:
+                        <input type="number" step=".01" min="0" class="input" name="valor_da_locacao" id="valor_da_locacao">
+                    </label>
+                    <label for="fatura_copel" class="label">Fatura Copel:
+                        <input type="number" step=".01" min="0" class="input" name="fatura_copel" id="fatura_copel">
+                    </label>
+                    <label for="valor_credito" class="label">Valor do crédito em conta:
+                        <input type="number" step=".01" min="0" class="input" name="valor_do_credito" id="valor_do_credito">
+                    </label>
+                    <label for="valor_kwh" class="label">Valor do kWh:
+                        <input type="number" step=".0001" min="0" class="input" name="valor_do_kwh" id="valor_kwh">
+                    </label>
+                    <label for="energia_gerada" class="label">Energia gerada:
+                        <input type="number" step=".01" min="0" class="input" name="energia_gerada" id="energia_gerada">
+                    </label>
+                    <label for="energia_consumida_investidor" class="label">Energia consumida pelo investidor:
+                        <input type="number" step=".01" min="0" class="input" name="energia_consumida_investidor" id="energia_consumida_investidor">
+                    </label>
+                    <label for="energia_enviada_cooperados" class="label">Energia enviada para os cooperados:
+                        <input type="number" step=".01" min="0" class="input" name="energia_enviada_cooperados" id="energia_enviada_cooperados">
+                    </label>
+                    <label for="total_consumido_cooperados" class="label">Total consumido pelos cooperados:
+                        <input type="number" step=".01" min="0" class="input" name="total_consumido_cooperados" id="total_consumido_cooperados">
+                    </label>
+                    <label for="total_acumulado_cooperados" class="label">Total acumulado pelos cooperados:
+                        <input type="number" step=".01" min="0" class="input" name="total_acumulado_cooperados" id="total_acumulado_cooperados">
+                    </label>
+                    <label for="retorno_acumulado" class="label">Retorno acumulado:
+                        <input type="number" step=".01" min="0" class="input" name="retorno_acumulado" id="retorno_acumulado">
+                    </label>
+                </div>
+
+                <div class="header">
+                    <h1>Histórico de recebimento</h1>
+                    <button type="button" class="button-add">Adicionar valor</button>
+                </div>
+                <div class="report">
+                    <h2 class="subtitle">Relatório atual:</h2>
+                    <div class="flex">
+                        <div class="column">
+                            <label for="mes" class="label-inline">Mês:
+                                <input type="month" class="input-inline" id="mes">
+                            </label>
+                        </div>
+                        <div class="column">
+                            <label for="recebido" class="label-inline">Recebido:
+                                <input type="number" step=".01" min="0" class="input-inline" id="recebido">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+            </form>
+        </div>
+        <div class="svg fatura" id="faturaId">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 1234 1579">
+                <path fill="#E6E6E6" d="M0 0H1234V1579H0z"></path>
+                <text fill="#404040" font-family="Inter" font-size="40" font-weight="bold">
+                    <tspan x="369.395" y="70.546">Relatório do Investidor</tspan>
+                </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="20"
+                        letter-spacing="0em">
+                        <tspan x="1019.74" y="39.273">+55 (44) 9 9897-7059<!-- --> </tspan>
+                        <tspan x="885.152" y="63.273">gestao@canalverdeenergia.com.br<!-- --> </tspan>
+                        <tspan x="968.629" y="87.273">canalverdeenergia.com.br</tspan>
+                    </text>
+                    <rect width="1194" height="411" x="20" y="147" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="40" y="190.227"></tspan>
+                    </text>
+                    <rect width="840" height="295" x="354" y="243" fill="#E6E6E6" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="15" letter-spacing="0em">
+                        <tspan x="374" y="277.455" >VALOR DO kWh</tspan>
+                    </text>
+                    <rect width="390" height="44" x="374" y="290" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="860" y="319.273" text-anchor="end" id="valor-kwh">R$ <!-- -->0,0000</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="784" y="277.455">ENERGIA GERADA</tspan>
+                    </text>
+                    <rect width="390" height="44" x="784" y="290" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="1155" y="319.273" text-anchor="end">0<!-- --> kWh</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="374" y="368.455">ENERGIA CONSUMIDA PELO PRÓPRIO INVESTIDOR</tspan>
+                    </text>
+                    <rect width="390" height="44" x="374" y="382" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="745" y="411.273" text-anchor="end">0<!-- --> kWh</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="784" y="368.455">ENERGIA ENVIADA PARA OS COOPERADOS</tspan>
+                    </text>
+                    <rect width="390" height="44" x="784" y="382" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="1155" y="411.273" text-anchor="end">0<!-- --> kWh</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="374" y="460.455">TOTAL CONSUMIDO PELOS COOPERADOS</tspan>
+                    </text>
+                    <rect width="310" height="44" x="374" y="474" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="665" y="503.273" text-anchor="end">0<!-- --> kWh</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="704" y="460.455">TOTAL ACUMULADO PELOS COOPERADOS</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="14"
+                        letter-spacing="0em">
+                        <tspan x="1016.77" y="460.455">(TODOS OS PERÍODOS)</tspan>
+                    </text>
+                    <rect width="470" height="44" x="704" y="474" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="1155" y="503.273" text-anchor="end">0<!-- --> kWh</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="40" y="230.455">MÊS DE REFERÊNCIA</tspan>
+                    </text>
+                    <rect width="294" height="44" x="40" y="243" fill="#E6E6E6" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="187" y="272.273" text-anchor="middle"></tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="40" y="313.788">VALOR DA LOCAÇÃO</tspan>
+                    </text>
+                    <rect width="294" height="44" x="40" y="326.333" fill="#E6E6E6" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="187" y="355.606" text-anchor="middle">R$ <!-- -->0,00</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="40" y="397.121">FATURA COPEL</tspan>
+                    </text>
+                    <rect width="294" height="44" x="40" y="409.667" fill="#E6E6E6" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="187" y="438.939" text-anchor="middle">R$ <!-- -->0,00</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        letter-spacing="0em">
+                        <tspan x="40" y="480.455">VALOR DO CRÉDITO EM CONTA</tspan>
+                    </text>
+                    <rect width="294" height="44" x="40" y="494" fill="#00B65F" rx="10"></rect><text fill="#fff"
+                        style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="187" y="523.273" text-anchor="middle">R$ <!-- -->0,00</tspan>
+                    </text>
+                    <mask id="path-38-inside-1_198_1303" fill="#fff">
+                        <path d="M747 112c0-5.523 4.477-10 10-10h477v77H757c-5.523 0-10-4.477-10-10v-57z"></path>
+                    </mask>
+                    <path fill="#fff" d="M747 112c0-5.523 4.477-10 10-10h477v77H757c-5.523 0-10-4.477-10-10v-57z">
+                    </path><text fill="#000" style="white-space:pre" font-family="Inter" font-size="20"
+                        letter-spacing="0em">
+                        <tspan x="762" y="131.273">Leitura anterior</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        font-weight="bold" letter-spacing="0em">
+                        <tspan x="830" y="163.227" text-anchor="middle"></tspan>
+                    </text>
+                    <path stroke="#000" d="M912 102v77"></path><text fill="#000" style="white-space:pre"
+                        font-family="Inter" font-size="20" letter-spacing="0em">
+                        <tspan x="937" y="131.273">Leitura atual</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        font-weight="bold" letter-spacing="0em">
+                        <tspan x="995" y="163.227" text-anchor="middle"></tspan>
+                    </text>
+                    <path stroke="#000" d="M1073 102v77"></path><text fill="#000" style="white-space:pre"
+                        font-family="Inter" font-size="20" letter-spacing="0em">
+                        <tspan x="1090" y="131.273">Próxima leitura</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        font-weight="bold" letter-spacing="0em">
+                        <tspan x="1155" y="163.227" text-anchor="middle"></tspan>
+                    </text>
+                    <path fill="#000"
+                        d="M746 112c0-6.075 4.925-11 11-11h477v2H757a9 9 0 00-9 9h-2zm488 68H757c-6.075 0-11-4.925-11-11h2a9 9 0 009 9h477v2zm-477 0c-6.075 0-11-4.925-11-11v-57c0-6.075 4.925-11 11-11v2a9 9 0 00-9 9v57a9 9 0 009 9v2zm477-78v77-77z"
+                        mask="url(#path-38-inside-1_198_1303)"></path><text fill="#404040" style="white-space:pre"
+                        font-family="Inter" font-size="24" letter-spacing="0em">
+                        <tspan x="70.512" y="591.227">RECEBIMENTO (R$)</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="20" y="620.318">MÊS</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="183" y="620.318">VALOR</tspan>
+                    </text>
+                    <path stroke="#939393" d="M20 630.786h326"></path><text fill="#000" style="white-space:pre"
+                        font-family="Inter" font-size="16" letter-spacing="0em">
+                        <tspan x="20" y="652.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="652.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="677.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="677.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="702.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="702.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="727.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="727.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="752.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="752.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="777.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="777.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="802.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="802.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="827.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="827.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="852.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="852.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="877.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="877.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="902.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="902.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="20" y="927.89">-</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
+                        letter-spacing="0em">
+                        <tspan x="183" y="927.89">-</tspan>
+                    </text>
+                    <rect width="326" height="72" x="20" y="947" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="16" letter-spacing="0em">
+                        <tspan x="40" y="972.318">RETORNO ACUMULADO</tspan>
+                    </text><text fill="#00B65F" style="white-space:pre" font-family="Inter" font-size="24"
+                        font-weight="bold" letter-spacing="0em">
+                        <tspan x="40" y="1003.23">R$ <!-- -->0,00</tspan>
+                    </text>
+                    <path fill="#939393"
+                        d="M305.138 988.413h4.173c0 1.949 2.858 3.609 6.258 3.609 3.401 0 6.259-1.66 6.259-3.609 0-1.985-2.17-2.706-6.76-3.663-4.422-.956-9.93-2.147-9.93-7.163 0-3.23 3.067-5.972 7.302-6.893v-3.933h6.258v3.933c4.235.921 7.302 3.663 7.302 6.893h-4.172c0-1.949-2.858-3.609-6.259-3.609-3.4 0-6.258 1.66-6.258 3.609 0 1.985 2.169 2.706 6.759 3.663 4.423.956 9.93 2.147 9.93 7.163 0 3.23-3.067 5.972-7.302 6.893v3.933h-6.258v-3.933c-4.235-.921-7.302-3.663-7.302-6.893z">
+                    </path><text fill="#404040" style="white-space:pre" font-family="Inter" font-size="24"
+                        letter-spacing="0em">
+                        <tspan x="594.055" y="591.227">HISTÓRICO DE RECEBIMENTO (R$)</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="420" y="631.455" text-anchor="end">0</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="420" y="703.255" text-anchor="end">0</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="420" y="775.055" text-anchor="end">0</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="420" y="846.855" text-anchor="end">0</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="420" y="918.655" text-anchor="end">0</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="420" y="990.455" text-anchor="end">0</tspan>
+                    </text>
+                    <path stroke="#939393" d="M435 624h779"></path>
+                    <path stroke="#BBB" d="M435 660.3h779"></path>
+                    <path stroke="#939393" d="M435 696.6h779"></path>
+                    <path stroke="#BBB" d="M435 732.9h779"></path>
+                    <path stroke="#939393" d="M435 769.2h779"></path>
+                    <path stroke="#BBB" d="M435 805.5h779"></path>
+                    <path stroke="#939393" d="M435 841.8h779"></path>
+                    <path stroke="#BBB" d="M435 878.1h779"></path>
+                    <path stroke="#939393" d="M435 914.4h779"></path>
+                    <path stroke="#BBB" d="M435 950.7h779"></path>
+                    <path stroke="#000" d="M435 987h779"></path>
+                    <rect x="490" y="987" width="35" height="0" transform="rotate(-180 490 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="472" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="554" y="987" width="35" height="0" transform="rotate(-180 554 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="536" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="618" y="987" width="35" height="0" transform="rotate(-180 618 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="600" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="682" y="987" width="35" height="0" transform="rotate(-180 682 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="664" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="746" y="987" width="35" height="0" transform="rotate(-180 746 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="728" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="810" y="987" width="35" height="0" transform="rotate(-180 810 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="792" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="874" y="987" width="35" height="0" transform="rotate(-180 874 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="856" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="938" y="987" width="35" height="0" transform="rotate(-180 938 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="920" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="1002" y="987" width="35" height="0" transform="rotate(-180 1002 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="984" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="1066" y="987" width="35" height="0" transform="rotate(-180 1066 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="1048" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="1130" y="987" width="35" height="0" transform="rotate(-180 1130 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="1112" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <rect x="1194" y="987" width="35" height="0" transform="rotate(-180 1194 987)" fill="#00B65F">
+                    </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
+                        font-weight="600" letter-spacing="0em">
+                        <tspan x="1176" y="1011.45" text-anchor="middle">-</tspan>
+                    </text>
+                    <path stroke="#000" stroke-dasharray="10 5" stroke-width="2" d="M20 1029h1194"></path><text
+                        fill="#006B41" style="white-space:pre" font-family="Inter" font-size="40" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="20" y="1081.55">DIFERENCIAIS CANAL VERDE</tspan>
+                    </text>
+                    <rect width="384.667" height="216" x="20" y="1107" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="30" y="1140.23">Administração inteligente</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        letter-spacing="0em">
+                        <tspan x="30" y="1179.23">Realizada por uma cooperativa<!-- --> </tspan>
+                        <tspan x="30" y="1208.23">totalmente estruturada,<!-- --> </tspan>
+                        <tspan x="30" y="1237.23">regulamentada e com vivência<!-- --> </tspan>
+                        <tspan x="30" y="1266.23">prática.</tspan>
+                    </text>
+                    <rect width="384.667" height="216" x="424.667" y="1107" fill="#fff" rx="10"></rect><text
+                        fill="#000" style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="434.667" y="1140.23">Segurança técnica</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        letter-spacing="0em">
+                        <tspan x="434.667" y="1179.23">Nas áreas de engenharia,<!-- --> </tspan>
+                        <tspan x="434.667" y="1208.23">jurídica, tributária e comercial<!-- --> </tspan>
+                        <tspan x="434.667" y="1237.23">da usina, orquestrada por um<!-- --> </tspan>
+                        <tspan x="434.667" y="1266.23">time de profissionais técnicos<!-- --> </tspan>
+                        <tspan x="434.667" y="1295.23">especializados.</tspan>
+                    </text>
+                    <rect width="384.667" height="216" x="829.333" y="1107" fill="#fff" rx="10"></rect><text
+                        fill="#000" style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="839.333" y="1140.23">Gestão à vista</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        letter-spacing="0em">
+                        <tspan x="839.333" y="1179.23">Você economiza logo no<!-- --> </tspan>
+                        <tspan x="839.333" y="1208.23">primeiro mês após a<!-- --> </tspan>
+                        <tspan x="839.333" y="1237.23">formalização e se livra de<!-- --> </tspan>
+                        <tspan x="839.333" y="1266.23">qualquer inflação energética.</tspan>
+                    </text>
+                    <rect width="384.667" height="216" x="20" y="1343" fill="#fff" rx="10"></rect><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="30" y="1376.23">Burocracia zero</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        letter-spacing="0em">
+                        <tspan x="30" y="1415.23">Não demanda esforços e nem<!-- --> </tspan>
+                        <tspan x="30" y="1444.23">tempo do investidor e<!-- --> </tspan>
+                        <tspan x="30" y="1473.23">cooperado. Atuamos em todos<!-- --> </tspan>
+                        <tspan x="30" y="1502.23">os trâmites necessários à<!-- --> </tspan>
+                        <tspan x="30" y="1531.23">operação do projeto.</tspan>
+                    </text>
+                    <rect width="384.667" height="216" x="424.667" y="1343" fill="#fff" rx="10"></rect><text
+                        fill="#000" style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="434.667" y="1376.23">Projeto específico</tspan>
+                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        letter-spacing="0em">
+                        <tspan x="434.667" y="1415.23">E sob medida, de acordo com a<!-- --> </tspan>
+                        <tspan x="434.667" y="1444.23">necessidade de cada cliente<!-- --> </tspan>
+                        <tspan x="434.667" y="1473.23">sobre projetos de Energias<!-- --> </tspan>
+                        <tspan x="434.667" y="1502.23">Renováveis.</tspan>
+                    </text>
+                    <rect width="384.667" height="216" x="829.333" y="1343" fill="#fff" rx="10"></rect>
+                    <path fill="url(#pattern1)" d="M949.167 1353H1094.167V1510H949.167z"></path><text fill="#000"
+                        style="white-space:pre" font-family="Inter" font-size="24" font-weight="bold"
+                        letter-spacing="0em">
+                        <tspan x="858.167" y="1543.23">Leia o QR Code e saiba mais</tspan>
+                    </text>
+
+                </svg>  
+            </div>
+        </div>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+        <script>
+            async function gerarPDF() {
+                const { jsPDF } = window.jspdf;
+                const element = document.querySelector('.fatura');
+    
+                if (element) {
+                    try {
+                        const canvas = await html2canvas(element);
+                        const imgData = canvas.toDataURL('image/png');
+                        const pdf = new jsPDF('p', 'mm', 'a4');
+                        const imgProps = pdf.getImageProperties(imgData);
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    
+                        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                        pdf.save('fatura.pdf');
+                    } catch (error) {
+                        console.error("Erro ao gerar PDF:", error);
+                    }
+                } else {
+                    console.error('Elemento não encontrado ou não visível');
+                }
+            }
+
+                    // Atualiza o tspan com o valor do input
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputKwh = document.getElementById('valor_kwh');
+            const tspanKwh = document.getElementById('valor-kwh');
+
+            // Atualizar o valor no tspan ao digitar no input
+            inputKwh.addEventListener('input', function() {
+                const valor = parseFloat(this.value).toFixed(4); // Formatar com 4 casas decimais
+                tspanKwh.textContent = 'R$ ' + valor;
+            });
+        });
+        </script>
+    </body>
+    
+    </html>
