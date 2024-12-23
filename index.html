@@ -864,6 +864,9 @@
                 // Não vamos adicionar esses elementos manualmente, pois eles são criados dinamicamente ao clicar no botão.
                 // A associação será feita no momento da criação do novo input.
             }
+
+            // Função para o primeiro campo de "Recebido" e "Valor Recebido"
+            atualizarAltura("recebido", "valor-recebido-vl");
         });
 
         async function gerarPDF() {
@@ -888,6 +891,7 @@
                 console.error('Elemento não encontrado ou não visível');
             }
         }
+
 
 
         </script>
