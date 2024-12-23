@@ -423,7 +423,7 @@
                     <rect x="490" y="987" width="35" height="0" transform="rotate(-180 490 987)" fill="#00B65F" id="valor-recebido-vl">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="472" y="1011.45" text-anchor="middle" id="valor-recebido">-</tspan>
+                        <tspan x="472" y="1011.45" text-anchor="middle" id="mes1">-</tspan>
                     </text>
                     <rect x="554" y="987" width="35" height="0" transform="rotate(-180 554 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
@@ -811,21 +811,26 @@
                 tspanKwh.textContent = 'R$ ' + valor;
             });
         });
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const inputValorCredito = document.getElementById('valor_do_credito');
-            const tspanValorRecebido = document.getElementById('valor-recebido');
+            const tspanValorRecebido = document.getElementById('mes1');
             const rectValorRecebido = document.getElementById('valor-recebido-vl');
             const inputRecebido = document.getElementById('recebido');
 
-            // Atualiza o valor do tspan no SVG, o input "recebido", e o height do rect
-            inputValorCredito.addEventListener('input', function() {
+            // Define a altura máxima permitida para o rect
+            const alturaMaxima = 360;
+
+            inputValorCredito.addEventListener('input', function () {
                 const valor = parseFloat(this.value);
                 tspanValorRecebido.textContent = valor.toFixed(2); // Formata o valor com 2 casas decimais
                 inputRecebido.value = valor;
 
-                // Atualiza a altura do rect proporcional ao valor
-                // Multiplica por um fator para ajustar a escala visual, se necessário
-                rectValorRecebido.setAttribute('height', valor);
+                // Determina a escala para garantir que o retângulo não exceda a altura máxima
+                const escala = valor > alturaMaxima ? alturaMaxima / valor : 1;
+                const alturaAjustada = valor * escala;
+
+                // Atualiza a altura do rect
+                rectValorRecebido.setAttribute('height', alturaAjustada);
             });
         });
 
