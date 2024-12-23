@@ -93,6 +93,7 @@
             <h1>Gerar relatório do investidor</h1>
             <form name="formulario">
                 <div class="full flex-wrap space">
+                    
                     <label for="leitura_anterior" class="label">Leitura anterior:
                         <input type="date" class="input" name="leitura_anterior" id="leitura_anterior">
                     </label>
@@ -236,7 +237,7 @@
                     <rect width="294" height="44" x="40" y="243" fill="#E6E6E6" rx="10"></rect><text fill="#000"
                         style="white-space:pre" font-family="Inter" font-size="20" font-weight="bold"
                         letter-spacing="0em">
-                        <tspan x="187" y="272.273" text-anchor="middle" id="mes-de-referencia"></tspan>
+                        <tspan x="40" y="272.273" text-anchor="middle" id="mes-de-referencia"></tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         letter-spacing="0em">
                         <tspan x="40" y="313.788">VALOR DA LOCAÇÃO</tspan>
@@ -269,9 +270,14 @@
                     </path><text fill="#000" style="white-space:pre" font-family="Inter" font-size="20"
                         letter-spacing="0em">
                         <tspan x="762" y="131.273">Leitura anterior</tspan>
-                    </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                    </text>
+                    <text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
                         font-weight="bold" letter-spacing="0em">
-                        <tspan x="830" y="163.227" text-anchor="middle" id="leitura-anterior"></tspan>
+                    <tspan x="40" y="170" text-anchor="left" id="nome-investidor"></tspan>
+                    </text>
+                    <text fill="#000" style="white-space:pre" font-family="Inter" font-size="24"
+                        font-weight="bold" letter-spacing="0em">
+                        <tspan x="767" y="163.227" text-anchor="right" id="leitura-anterior"></tspan>
                     </text>
                     <path stroke="#000" d="M912 102v77"></path><text fill="#000" style="white-space:pre"
                         font-family="Inter" font-size="20" letter-spacing="0em">
@@ -578,10 +584,16 @@
             const inputKwh = document.getElementById('leitura_anterior');
             const tspanKwh = document.getElementById('leitura-anterior');
 
-            // Atualizar o valor no tspan ao digitar no input
+            // Atualizar o valor no tspan ao mudar a data no input
             inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(4); // Formatar com 4 casas decimais
-                tspanKwh.textContent = 'R$ ' + valor;
+                const valor = this.value; // Captura a data no formato yyyy-mm-dd
+                if (valor) {
+                    const partes = valor.split('-'); // Divide a data em partes
+                    const dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`; // Reorganiza para dd/mm/yyyy
+                    tspanKwh.textContent = dataFormatada; // Atualiza o tspan
+                } else {
+                    tspanKwh.textContent = 'Selecione uma data';
+                }
             });
         });
                     // Atualiza o tspan com o valor do input
@@ -589,10 +601,16 @@
             const inputKwh = document.getElementById('leitura_atual');
             const tspanKwh = document.getElementById('leitura-atual');
 
-            // Atualizar o valor no tspan ao digitar no input
+            // Atualizar o valor no tspan ao mudar a data no input
             inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(4); // Formatar com 4 casas decimais
-                tspanKwh.textContent = 'R$ ' + valor;
+                const valor = this.value; // Captura a data no formato yyyy-mm-dd
+                if (valor) {
+                    const partes = valor.split('-'); // Divide a data em partes
+                    const dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`; // Reorganiza para dd/mm/yyyy
+                    tspanKwh.textContent = dataFormatada; // Atualiza o tspan
+                } else {
+                    tspanKwh.textContent = 'Selecione uma data';
+                }
             });
         });
                     // Atualiza o tspan com o valor do input
@@ -600,10 +618,16 @@
             const inputKwh = document.getElementById('proxima_leitura');
             const tspanKwh = document.getElementById('proxima-leitura');
 
-            // Atualizar o valor no tspan ao digitar no input
+            // Atualizar o valor no tspan ao mudar a data no input
             inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(4); // Formatar com 4 casas decimais
-                tspanKwh.textContent = 'R$ ' + valor;
+                const valor = this.value; // Captura a data no formato yyyy-mm-dd
+                if (valor) {
+                    const partes = valor.split('-'); // Divide a data em partes
+                    const dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`; // Reorganiza para dd/mm/yyyy
+                    tspanKwh.textContent = dataFormatada; // Atualiza o tspan
+                } else {
+                    tspanKwh.textContent = 'Selecione uma data';
+                }
             });
         });
                     // Atualiza o tspan com o valor do input
@@ -613,19 +637,33 @@
 
             // Atualizar o valor no tspan ao digitar no input
             inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(4); // Formatar com 4 casas decimais
-                tspanKwh.textContent = 'R$ ' + valor;
+                const valor = this.value; // Captura o texto inserido no input
+                tspanKwh.textContent = valor; // Atualiza o tspan com o texto do input
             });
         });
                     // Atualiza o tspan com o valor do input
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputKwh = document.getElementById('mes_de_referencia');
-            const tspanKwh = document.getElementById('mes-de-referencia');
+                    document.addEventListener('DOMContentLoaded', function() {
+            const inputMonth = document.getElementById('mes_de_referencia');
+            const tspanMonth = document.getElementById('mes-de-referencia');
 
-            // Atualizar o valor no tspan ao digitar no input
-            inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(4); // Formatar com 4 casas decimais
-                tspanKwh.textContent = 'R$ ' + valor;
+            // Mapear meses para seus nomes completos
+            const meses = [
+                "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+                "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+            ];
+
+            // Atualizar o valor no tspan ao mudar o mês no input
+            inputMonth.addEventListener('input', function() {
+                const valor = this.value; // Captura o valor no formato yyyy-mm
+                if (valor) {
+                    const partes = valor.split('-'); // Divide a data em [yyyy, mm]
+                    const ano = partes[0];
+                    const mesIndex = parseInt(partes[1], 10) - 1; // Meses começam em 0 no array
+                    const mesNome = meses[mesIndex]; // Obter o nome do mês
+                    tspanMonth.textContent = `${mesNome}/${ano}`; // Atualiza o tspan
+                } else {
+                    tspanMonth.textContent = 'Selecione um mês';
+                }
             });
         });
                     // Atualiza o tspan com o valor do input
