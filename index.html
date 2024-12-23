@@ -143,7 +143,7 @@
 
                 <div class="header">
                     <h1>Histórico de recebimento</h1>
-                    <button type="button" class="button-add">Adicionar valor</button>
+                    <button type="button"  id="addValueButton"  class="button-add">Adicionar valor</button>
                 </div>
                 <div class="report">
                     <h2 class="subtitle">Relatório atual:</h2>
@@ -160,6 +160,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="reportsContainer"></div>
                 <button type="button" onclick="gerarPDF()">Gerar PDF</button>
             </form>
         </div>
@@ -428,57 +429,57 @@
                     <rect x="554" y="987" width="35" height="0" transform="rotate(-180 554 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="536" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="536" y="1011.45" text-anchor="middle" id="mes2">-</tspan>
                     </text>
                     <rect x="618" y="987" width="35" height="0" transform="rotate(-180 618 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="600" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="600" y="1011.45" text-anchor="middle" id="mes3">-</tspan>
                     </text>
                     <rect x="682" y="987" width="35" height="0" transform="rotate(-180 682 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="664" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="664" y="1011.45" text-anchor="middle" id="mes4">-</tspan>
                     </text>
                     <rect x="746" y="987" width="35" height="0" transform="rotate(-180 746 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="728" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="728" y="1011.45" text-anchor="middle" id="mes5">-</tspan>
                     </text>
                     <rect x="810" y="987" width="35" height="0" transform="rotate(-180 810 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="792" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="792" y="1011.45" text-anchor="middle" id="mes6">-</tspan>
                     </text>
                     <rect x="874" y="987" width="35" height="0" transform="rotate(-180 874 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="856" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="856" y="1011.45" text-anchor="middle" id="mes7">-</tspan>
                     </text>
                     <rect x="938" y="987" width="35" height="0" transform="rotate(-180 938 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="920" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="920" y="1011.45" text-anchor="middle" id="mes8">-</tspan>
                     </text>
                     <rect x="1002" y="987" width="35" height="0" transform="rotate(-180 1002 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="984" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="984" y="1011.45" text-anchor="middle" id="mes9">-</tspan>
                     </text>
                     <rect x="1066" y="987" width="35" height="0" transform="rotate(-180 1066 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="1048" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="1048" y="1011.45" text-anchor="middle" id="mes10">-</tspan>
                     </text>
                     <rect x="1130" y="987" width="35" height="0" transform="rotate(-180 1130 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="1112" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="1112" y="1011.45" text-anchor="middle" id="mes11">-</tspan>
                     </text>
                     <rect x="1194" y="987" width="35" height="0" transform="rotate(-180 1194 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="1176" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="1176" y="1011.45" text-anchor="middle" id="mes12">-</tspan>
                     </text>
                     <path stroke="#000" stroke-dasharray="10 5" stroke-width="2" d="M20 1029h1194"></path><text
                         fill="#006B41" style="white-space:pre" font-family="Inter" font-size="40" font-weight="bold"
@@ -811,11 +812,15 @@
                 tspanKwh.textContent = 'R$ ' + valor;
             });
         });
+        let reportCounter = 1; // Counter to give unique IDs
+
         document.addEventListener('DOMContentLoaded', function () {
             const inputValorCredito = document.getElementById('valor_do_credito');
             const tspanValorRecebido = document.getElementById('mes1');
             const rectValorRecebido = document.getElementById('valor-recebido-vl');
             const inputRecebido = document.getElementById('recebido');
+            const buttonAddValue = document.getElementById('addValueButton');
+            const reportsContainer = document.getElementById('reportsContainer');
 
             // Define a altura máxima permitida para o rect
             const alturaMaxima = 360;
@@ -832,7 +837,53 @@
                 // Atualiza a altura do rect
                 rectValorRecebido.setAttribute('height', alturaAjustada);
             });
+
+            buttonAddValue.addEventListener('click', function () {
+                reportCounter++; // Increment the counter for unique IDs
+                const newReport = document.createElement('div');
+                newReport.classList.add('report');
+                newReport.innerHTML = `
+                    <div class="flex">
+                        <div class="column">
+                            <label for="mes${reportCounter}" class="label-inline">Mês:
+                                <input type="month" class="input-inline" id="mes${reportCounter}">
+                            </label>
+                        </div>
+                        <div class="column">
+                            <label for="recebido${reportCounter}" class="label-inline">Recebido:
+                                <input type="number" step=".01" min="0" class="input-inline" id="recebido${reportCounter}">
+                            </label>
+                        </div>
+                    </div>
+                `;
+                reportsContainer.appendChild(newReport);
+            });
         });
+
+        async function gerarPDF() {
+            const { jsPDF } = window.jspdf;
+            const element = document.querySelector('.fatura');
+
+            if (element) {
+                try {
+                    const canvas = await html2canvas(element, { scale: 3 });
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const imgProps = pdf.getImageProperties(imgData);
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    pdf.save('fatura.pdf');
+                } catch (error) {
+                    console.error("Erro ao gerar PDF:", error);
+                }
+            } else {
+                console.error('Elemento não encontrado ou não visível');
+            }
+        }
+
+        
 
         
         </script>
