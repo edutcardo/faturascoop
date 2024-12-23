@@ -308,7 +308,7 @@
                     </text>
                     <path stroke="#939393" d="M20 630.786h326"></path><text fill="#000" style="white-space:pre"
                         font-family="Inter" font-size="16" letter-spacing="0em">
-                        <tspan x="20" y="652.89">-</tspan>
+                        <tspan x="20" y="652.89" id="teste">-</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="16"
                         letter-spacing="0em">
                         <tspan x="183" y="652.89">-</tspan>
@@ -558,6 +558,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
         <script>
+
             async function gerarPDF() {
                 const { jsPDF } = window.jspdf;
                 const element = document.querySelector('.fatura');
@@ -640,6 +641,17 @@
             inputKwh.addEventListener('input', function() {
                 const valor = this.value; // Captura o texto inserido no input
                 tspanKwh.textContent = valor; // Atualiza o tspan com o texto do input
+            });
+        });
+            // Atualiza o tspan com o valor do input
+            document.addEventListener('DOMContentLoaded', function() {
+            const inputKwh = document.getElementById('retorno_acumulado');
+            const tspanKwh = document.getElementById('retorno-acumulado');
+
+            // Atualizar o valor no tspan ao digitar no input
+            inputKwh.addEventListener('input', function() {
+                const valor = parseFloat(this.value).toFixed(2); // Formatar com 4 casas decimais
+                tspanKwh.textContent = 'R$ ' + valor;
             });
         });
                     // Atualiza o tspan com o valor do input
@@ -891,7 +903,6 @@
                 console.error('Elemento não encontrado ou não visível');
             }
         }
-
 
 
         </script>
