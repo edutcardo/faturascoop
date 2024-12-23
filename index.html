@@ -784,34 +784,6 @@
                 }
             });
         });
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputKwh = document.getElementById('total_acumulado_cooperados');
-            const tspanKwh = document.getElementById('total-acumulado-cooperados');
-
-            // Atualizar o valor no tspan ao digitar no input
-            inputKwh.addEventListener('input', function() {
-                // Remover caracteres não numéricos e ponto, transformar em float
-                const valor = parseFloat(this.value.replace(/[^\d,.-]/g, ''));
-
-                // Verificar se o valor é um número e formatá-lo com casas decimais
-                if (!isNaN(valor)) {
-                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
-                    tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
-                } else {
-                    tspanKwh.textContent = 'Por favor, insira um valor válido';
-                }
-            });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputKwh = document.getElementById('retorno_acumulado');
-            const tspanKwh = document.getElementById('retorno-acumulado');
-
-            // Atualizar o valor no tspan ao digitar no input
-            inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(4).replace('.', ','); // Formatar com 4 casas decimais
-                tspanKwh.textContent = 'R$ ' + valor;
-            });
-        });
         let reportCounter = 1; // Counter to give unique IDs
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -825,19 +797,44 @@
             // Define a altura máxima permitida para o rect
             const alturaMaxima = 360;
 
+            // Função para atualizar o height de qualquer rect baseado no valor do input recebido
+            function atualizarAltura(inputId, rectId) {
+                const input = document.getElementById(inputId);
+                const rect = document.getElementById(rectId);
+
+                if (input && rect) {  // Verifique se os elementos existem
+                    input.addEventListener('input', function () {
+                        const valor = parseFloat(this.value);
+                        if (!isNaN(valor)) {
+                            // Determina a escala para garantir que o retângulo não exceda a altura máxima
+                            const escala = valor > alturaMaxima ? alturaMaxima / valor : 1;
+                            const alturaAjustada = valor * escala;
+
+                            // Atualiza a altura do rect
+                            rect.setAttribute('height', alturaAjustada);
+                        }
+                    });
+                }
+            }
+
+            // Inicializa para o mes1 e recebido1
             inputValorCredito.addEventListener('input', function () {
                 const valor = parseFloat(this.value);
                 tspanValorRecebido.textContent = valor.toFixed(2); // Formata o valor com 2 casas decimais
                 inputRecebido.value = valor;
 
-                // Determina a escala para garantir que o retângulo não exceda a altura máxima
+                // Atualiza a altura do rect do mes1
                 const escala = valor > alturaMaxima ? alturaMaxima / valor : 1;
                 const alturaAjustada = valor * escala;
-
-                // Atualiza a altura do rect
                 rectValorRecebido.setAttribute('height', alturaAjustada);
             });
 
+            // Inicializa os campos para mes2 até mes12
+            for (let i = 2; i <= 12; i++) {
+                atualizarAltura(`recebido${i}`, `mes${i}`);
+            }
+
+            // Função para adicionar novos relatórios
             buttonAddValue.addEventListener('click', function () {
                 reportCounter++; // Increment the counter for unique IDs
                 const newReport = document.createElement('div');
@@ -857,6 +854,9 @@
                     </div>
                 `;
                 reportsContainer.appendChild(newReport);
+
+                // Depois de adicionar o novo relatório, inicializa o evento de input para ele
+                atualizarAltura(`recebido${reportCounter}`, `mes${reportCounter}`);
             });
         });
 
@@ -883,7 +883,6 @@
             }
         }
 
-        
 
         
         </script>
