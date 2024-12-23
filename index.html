@@ -392,22 +392,22 @@
                         <tspan x="594.055" y="591.227">HISTÓRICO DE RECEBIMENTO (R$)</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="420" y="631.455" text-anchor="end">0</tspan>
+                        <tspan x="500" y="631.455" text-anchor="end">0</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="420" y="703.255" text-anchor="end">0</tspan>
+                        <tspan x="500" y="703.255" text-anchor="end">0</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="420" y="775.055" text-anchor="end">0</tspan>
+                        <tspan x="500" y="775.055" text-anchor="end">0</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="420" y="846.855" text-anchor="end">0</tspan>
+                        <tspan x="500" y="846.855" text-anchor="end">0</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="420" y="918.655" text-anchor="end">0</tspan>
+                        <tspan x="500" y="918.655" text-anchor="end">0</tspan>
                     </text><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="420" y="990.455" text-anchor="end">0</tspan>
+                        <tspan x="500" y="990.455" text-anchor="end">0</tspan>
                     </text>
                     <path stroke="#939393" d="M435 624h779"></path>
                     <path stroke="#BBB" d="M435 660.3h779"></path>
@@ -420,10 +420,10 @@
                     <path stroke="#939393" d="M435 914.4h779"></path>
                     <path stroke="#BBB" d="M435 950.7h779"></path>
                     <path stroke="#000" d="M435 987h779"></path>
-                    <rect x="490" y="987" width="35" height="0" transform="rotate(-180 490 987)" fill="#00B65F">
+                    <rect x="490" y="987" width="35" height="0" transform="rotate(-180 490 987)" fill="#00B65F" id="valor-recebido-vl">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
                         font-weight="600" letter-spacing="0em">
-                        <tspan x="472" y="1011.45" text-anchor="middle">-</tspan>
+                        <tspan x="472" y="1011.45" text-anchor="middle" id="valor-recebido">-</tspan>
                     </text>
                     <rect x="554" y="987" width="35" height="0" transform="rotate(-180 554 987)" fill="#00B65F">
                     </rect><text fill="#000" style="white-space:pre" font-family="Inter" font-size="15"
@@ -722,7 +722,7 @@
 
                 // Verificar se o valor é um número e formatá-lo para kWh
                 if (!isNaN(valor)) {
-                    const kWh = valor.toFixed(2).replace('.', ','); // Formatar com 2 casas decimais
+                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
                     tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
                 } else {
                     tspanKwh.textContent = 'Por favor, insira um valor válido';
@@ -740,7 +740,7 @@
 
                 // Verificar se o valor é um número e formatá-lo para kWh
                 if (!isNaN(valor)) {
-                    const kWh = valor.toFixed(2).replace('.', ','); // Formatar com 2 casas decimais
+                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
                     tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
                 } else {
                     tspanKwh.textContent = 'Por favor, insira um valor válido';
@@ -758,7 +758,7 @@
 
                 // Verificar se o valor é um número e formatá-lo para kWh
                 if (!isNaN(valor)) {
-                    const kWh = valor.toFixed(2).replace('.', ','); // Formatar com 2 casas decimais
+                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
                     tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
                 } else {
                     tspanKwh.textContent = 'Por favor, insira um valor válido';
@@ -776,7 +776,7 @@
 
                 // Verificar se o valor é um número e formatá-lo para kWh
                 if (!isNaN(valor)) {
-                    const kWh = valor.toFixed(2).replace('.', ','); // Formatar com 2 casas decimais
+                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
                     tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
                 } else {
                     tspanKwh.textContent = 'Por favor, insira um valor válido';
@@ -794,7 +794,7 @@
 
                 // Verificar se o valor é um número e formatá-lo com casas decimais
                 if (!isNaN(valor)) {
-                    const kWh = valor.toFixed(2).replace('.', ','); // Formatar com 2 casas decimais
+                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
                     tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
                 } else {
                     tspanKwh.textContent = 'Por favor, insira um valor válido';
@@ -811,6 +811,25 @@
                 tspanKwh.textContent = 'R$ ' + valor;
             });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputValorCredito = document.getElementById('valor_do_credito');
+            const tspanValorRecebido = document.getElementById('valor-recebido');
+            const rectValorRecebido = document.getElementById('valor-recebido-vl');
+            const inputRecebido = document.getElementById('recebido');
+
+            // Atualiza o valor do tspan no SVG, o input "recebido", e o height do rect
+            inputValorCredito.addEventListener('input', function() {
+                const valor = parseFloat(this.value);
+                tspanValorRecebido.textContent = valor.toFixed(2); // Formata o valor com 2 casas decimais
+                inputRecebido.value = valor;
+
+                // Atualiza a altura do rect proporcional ao valor
+                // Multiplica por um fator para ajustar a escala visual, se necessário
+                rectValorRecebido.setAttribute('height', valor);
+            });
+        });
+
+        
         </script>
     </body>
     
