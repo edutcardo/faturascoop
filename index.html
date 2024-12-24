@@ -765,7 +765,7 @@
 
             // Atualizar o valor no tspan ao digitar no input
             inputKwh.addEventListener('input', function() {
-                const valor = parseFloat(this.value).toFixed(2); // Formatar com 4 casas decimais
+                const valor = parseFloat(this.value).toFixed(2).replace('.', ','); // Formatar com 4 casas decimais
                 tspanKwh.textContent = 'R$ ' + valor;
             });
         });
@@ -896,6 +896,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             const inputKwh = document.getElementById('total_consumido_cooperados');
             const tspanKwh = document.getElementById('total-consumido-cooperados');
+
+            // Atualizar o valor no tspan ao digitar no input
+            inputKwh.addEventListener('input', function() {
+                // Remover caracteres não numéricos e ponto, transformar em float
+                const valor = parseFloat(this.value.replace(/[^\d,.-]/g, ''));
+
+                // Verificar se o valor é um número e formatá-lo para kWh
+                if (!isNaN(valor)) {
+                    const kWh = valor.toFixed(0).replace('.', ','); // Formatar com 2 casas decimais
+                    tspanKwh.textContent = `${kWh} kWh`; // Atualiza o tspan com o valor em kWh
+                } else {
+                    tspanKwh.textContent = 'Por favor, insira um valor válido';
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputKwh = document.getElementById('total_acumulado_cooperados');
+            const tspanKwh = document.getElementById('total-acumulado-cooperados');
 
             // Atualizar o valor no tspan ao digitar no input
             inputKwh.addEventListener('input', function() {
