@@ -896,7 +896,7 @@
                 const input = document.getElementById(inputId);
                 const tspan = document.getElementById(tspanId);
 
-                if (input && tspan) { // Certifique-se de que ambos os elementos existem
+                if (input && tspan) {
                     input.addEventListener('input', function() {
                         const valor = this.value;
                         if (valor) {
@@ -912,12 +912,36 @@
                 }
             }
 
-            // Aplica a lógica para todos os casos de mesm1 -> mes até mesm12 -> mes12
+            function addRecebidoInputEvent(inputId, tspanId) {
+                const input = document.getElementById(inputId);
+                const tspan = document.getElementById(tspanId);
+
+                if (input && tspan) {
+                    input.addEventListener('input', function() {
+                        const valor = parseFloat(this.value);
+                        if (!isNaN(valor)) {
+                            tspan.textContent = `R$ ${valor.toFixed(2)}`; // Formata o valor com 2 casas decimais
+                        } else {
+                            tspan.textContent = 'R$ 0.00';
+                        }
+                    });
+                }
+            }
+
+            // Configura os eventos para os inputs de mês e seus respectivos tspans
             for (let i = 1; i <= 12; i++) {
-                let inputId = i === 1 ? 'mes' : `mesc${i}`;  // Use 'mes' para o primeiro, depois 'mesc2', 'mesc3', etc.
-                let tspanId = `mesm${i}`; // Correspondente 'mesm1', 'mesm2', ...
+                let inputId = i === 1 ? 'mes' : `mesc${i}`;
+                let tspanId = `mesm${i}`;
 
                 addMonthInputEvent(inputId, tspanId);
+            }
+
+            // Configura os eventos para os inputs de recebido e seus respectivos tspans
+            for (let i = 1; i <= 12; i++) {
+                let inputId = `recebido${i}`;
+                let tspanId = `mesv${i}`;
+
+                addRecebidoInputEvent(inputId, tspanId);
             }
         });
         document.addEventListener('DOMContentLoaded', function() {
@@ -939,6 +963,26 @@
                     currentIndex++;
                 }
             });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            function addSingleRecebidoInputEvent(inputId, tspanId) {
+                const input = document.getElementById(inputId);
+                const tspan = document.getElementById(tspanId);
+
+                if (input && tspan) {
+                    input.addEventListener('input', function() {
+                        const valor = parseFloat(this.value);
+                        if (!isNaN(valor)) {
+                            tspan.textContent = `R$ ${valor.toFixed(2)}`; // Formata o valor com 2 casas decimais
+                        } else {
+                            tspan.textContent = 'R$ 0.00';
+                        }
+                    });
+                }
+            }
+
+            // Aplica a função apenas para o primeiro caso
+            addSingleRecebidoInputEvent('recebido', 'mesv1');
         });
 
         document.addEventListener('DOMContentLoaded', function () {
