@@ -157,10 +157,39 @@
                             <label for="recebido" class="label-inline">Recebido:
                                 <input type="number" step=".01" min="0" class="input-inline" id="recebido">
                             </label>
+                            <div class="column">
+                                <label for="mesc2" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc2">
+                                </label>
+                            </div>
+                            <div class="column">
+                                <label for="recebido2" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido2">
+                                </label>
+                            </div>
+                            <div class="column">
+                                <label for="mesc3" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc3">
+                                </label>
+                            </div>
+                            <div class="column">
+                                <label for="recebido3" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido3">
+                                </label>
+                            </div>
+                            <div class="column">
+                                <label for="mesc4" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc4">
+                                </label>
+                            </div>
+                            <div class="column">
+                                <label for="recebido4" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido4">
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="reportsContainer"></div>
                 <button type="button" onclick="gerarPDF()">Gerar PDF</button>
             </form>
         </div>
@@ -796,6 +825,64 @@
                 }
             });
         });
+        document.addEventListener('DOMContentLoaded', function () {
+            const monthInputs = ['mes', 'mesc2', 'mesc3', 'mesc4'];
+            const tspans = ['mes1', 'mes2', 'mes3', 'mes4'];
+            const monthShortNames = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+
+            function addMonthInputEvent(inputId, tspanId) {
+                const input = document.getElementById(inputId);
+                const tspan = document.getElementById(tspanId);
+
+                input.addEventListener('input', function () {
+                    const valor = this.value; // Captura o valor no formato yyyy-mm
+                    if (valor) {
+                        const partes = valor.split('-'); // Divide a data em [yyyy, mm]
+                        const mesAbreviado = monthShortNames[parseInt(partes[1], 10) - 1]; // Obter a abreviação do mês
+                        tspan.textContent = `${mesAbreviado}`; // Atualiza o tspan com o mês abreviado
+                    } else {
+                        tspan.textContent = '-'; // Define um valor padrão se o campo estiver vazio
+                    }
+                });
+            }
+
+            function updateAllMonths() {
+                monthInputs.forEach((id, index) => {
+                    const input = document.getElementById(id);
+                    const tspan = document.getElementById(tspans[index]);
+                    const valor = input.value;
+                    if (valor) {
+                        const partes = valor.split('-');
+                        const mesAbreviado = monthShortNames[parseInt(partes[1], 10) - 1];
+                        tspan.textContent = `${mesAbreviado}`;
+                    } else {
+                        tspan.textContent = '-';
+                    }
+                });
+            }
+
+            // Adiciona eventos aos inputs visíveis inicialmente
+            monthInputs.forEach((id, index) => {
+                addMonthInputEvent(id, tspans[index]);
+            });
+
+            // Adiciona manipuladores de eventos quando os inputs são revelados
+            const addValueButton = document.getElementById('addValueButton');
+            const hiddenInputs = document.querySelectorAll('.hiddenInputs .hidden');
+
+            addValueButton.addEventListener('click', function () {
+                for (let i = 0; i < hiddenInputs.length; i++) {
+                    if (hiddenInputs[i].classList.contains('hidden')) {
+                        hiddenInputs[i].classList.remove('hidden');
+                        
+                        // Adiciona eventos aos novos inputs revelados
+                        addMonthInputEvent(monthInputs[i], tspans[i]);
+                        break;
+                    }
+                }
+                updateAllMonths(); // Força a atualização de todos os meses
+            });
+        });
         let reportCounter = 1; // Counter to give unique IDs
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -841,31 +928,6 @@
                 rectValorRecebido.setAttribute('height', alturaAjustada);
             });
 
-            // Adiciona o novo relatório com os inputs dinamicamente
-            function criarNovoRelatorio() {
-                reportCounter++; // Increment the counter for unique IDs
-                const newReport = document.createElement('div');
-                newReport.classList.add('report');
-                newReport.innerHTML = `
-                    <div class="flex">
-                        <div class="column">
-                            <label for="mes${reportCounter}" class="label-inline">Mês:
-                                <input type="month" class="input-inline" id="mes${reportCounter}">
-                            </label>
-                        </div>
-                        <div class="column">
-                            <label for="recebido${reportCounter}" class="label-inline">Recebido:
-                                <input type="number" step=".01" min="0" class="input-inline" id="recebido${reportCounter}">
-                            </label>
-                        </div>
-                    </div>
-                `;
-                reportsContainer.appendChild(newReport);
-
-                // Depois de adicionar o novo relatório, inicializa o evento de input para ele
-                atualizarAltura(`recebido${reportCounter}`, `mes${reportCounter}t`);
-            }
-
             // Adiciona evento para o botão de adicionar valor
             buttonAddValue.addEventListener('click', function () {
                 criarNovoRelatorio();
@@ -879,6 +941,34 @@
 
             // Função para o primeiro campo de "Recebido" e "Valor Recebido"
             atualizarAltura("recebido", "valor-recebido-vl");
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const alturaMaxima = 360;
+
+            function atualizarAltura(inputId, rectId) {
+                const input = document.getElementById(inputId);
+                const rect = document.getElementById(rectId);
+
+                if (input && rect) {
+                    input.addEventListener('input', function() {
+                        const valor = parseFloat(this.value);
+                        if (!isNaN(valor)) {
+                            // Determina a escala para garantir que o retângulo não exceda a altura máxima
+                            const escala = valor > alturaMaxima ? alturaMaxima / valor : 1;
+                            const alturaAjustada = valor * escala;
+
+                            // Atualiza a altura do rect
+                            rect.setAttribute('height', alturaAjustada);
+                        }
+                    });
+                }
+            }
+
+            // Inicializa a altura para cada input e retângulo
+            atualizarAltura("recebido", "valor-recebido-vl");
+            atualizarAltura("recebido2", "mes2t");
+            atualizarAltura("recebido3", "mes3t");
+            atualizarAltura("recebido4", "mes4t");
         });
 
         async function gerarPDF() {
