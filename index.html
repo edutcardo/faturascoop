@@ -1209,6 +1209,63 @@
                 console.error('Elemento não encontrado ou não visível');
             }
         }
+        document.addEventListener('DOMContentLoaded', function () {
+            const alturaMaxima = 360;
+            const inputsRecebido = [
+                'recebido', 'recebido2', 'recebido3', 'recebido4',
+                'recebido5', 'recebido6', 'recebido7', 'recebido8',
+                'recebido9', 'recebido10', 'recebido11', 'recebido12'
+            ];
+            const rectsIds = [
+                'valor-recebido-vl', 'mes2t', 'mes3t', 'mes4t',
+                'mes5t', 'mes6t', 'mes7t', 'mes8t',
+                'mes9t', 'mes10t', 'mes11t', 'mes12t'
+            ];
+
+            function atualizarEscala() {
+                let maxValor = 0;
+
+                // Encontra o maior valor entre os inputs
+                inputsRecebido.forEach(id => {
+                    const input = document.getElementById(id);
+                    const valor = parseFloat(input.value);
+                    if (!isNaN(valor) && valor > maxValor) {
+                        maxValor = valor;
+                    }
+                });
+
+                // Calcula a escala
+                const escala = maxValor > alturaMaxima ? alturaMaxima / maxValor : 1;
+
+                // Atualiza a altura dos rects
+                inputsRecebido.forEach((id, index) => {
+                    const input = document.getElementById(id);
+                    const rectId = rectsIds[index];
+                    const rect = document.getElementById(rectId);
+
+                    if (input && rect) {
+                        const valor = parseFloat(input.value);
+                        if (!isNaN(valor)) {
+                            const alturaAjustada = valor * escala;
+                            rect.setAttribute('height', alturaAjustada);
+                        } else {
+                            rect.setAttribute('height', 0); // Configura altura para 0 se o valor não for um número
+                        }
+                    }
+                });
+            }
+
+            // Adiciona eventos de input para cada campo de recebido
+            inputsRecebido.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', atualizarEscala);
+                }
+            });
+
+            // Inicializa a escala ao carregar a página
+            atualizarEscala();
+        });
 
 
         </script>
