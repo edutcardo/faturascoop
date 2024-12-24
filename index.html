@@ -87,6 +87,23 @@
         .hidden {
             display: none;
         }
+        .datas{
+            display: flex;
+            gap: 32px;
+        }
+        .precosfat{
+            display: flex;
+            gap: 56px;
+        }
+        .kwh1{
+            display: flex;
+            gap: 92px;
+        }
+        .kwh2{
+            display: flex;
+            gap: 95px;
+        }
+        
 
     </style>
 </head>
@@ -97,7 +114,10 @@
             <h1>Gerar relatório do investidor</h1>
             <form name="formulario">
                 <div class="full flex-wrap space">
-                    
+                    <div class="datas">
+                    <label for="nome_investidor" class="label">Nome do investidor:
+                        <input class="input" name="nome_investidor" id="nome_investidor">
+                    </label>
                     <label for="leitura_anterior" class="label">Leitura anterior:
                         <input type="date" class="input" name="leitura_anterior" id="leitura_anterior">
                     </label>
@@ -107,12 +127,11 @@
                     <label for="proxima_leitura" class="label">Próxima leitura:
                         <input type="date" class="input" name="proxima_leitura" id="proxima_leitura">
                     </label>
-                    <label for="nome_investidor" class="label">Nome do investidor:
-                        <input class="input" name="nome_investidor" id="nome_investidor">
-                    </label>
                     <label for="mes_de_referencia" class="label">Mês de referência:
                         <input type="month" class="input" name="mes_de_referencia" id="mes_de_referencia">
                     </label>
+                    </div>
+                    <div class="precosfat">
                     <label for="valor_locacao" class="label">Valor da locação:
                         <input type="number" step=".01" min="0" class="input" name="valor_da_locacao" id="valor_da_locacao">
                     </label>
@@ -125,6 +144,8 @@
                     <label for="valor_kwh" class="label">Valor do kWh:
                         <input type="number" step=".0001" min="0" class="input" name="valor_do_kwh" id="valor_kwh">
                     </label>
+                    </div>
+                    <div class="kwh1">
                     <label for="energia_gerada" class="label">Energia gerada:
                         <input type="number" step=".01" min="0" class="input" name="energia_gerada" id="energia_gerada">
                     </label>
@@ -134,6 +155,8 @@
                     <label for="energia_enviada_cooperados" class="label">Energia enviada para os cooperados:
                         <input type="number" step=".01" min="0" class="input" name="energia_enviada_cooperados" id="energia_enviada_cooperados">
                     </label>
+                    </div>
+                    <div class="kwh2">
                     <label for="total_consumido_cooperados" class="label">Total consumido pelos cooperados:
                         <input type="number" step=".01" min="0" class="input" name="total_consumido_cooperados" id="total_consumido_cooperados">
                     </label>
@@ -143,6 +166,7 @@
                     <label for="retorno_acumulado" class="label">Retorno acumulado:
                         <input type="number" step=".01" min="0" class="input" name="retorno_acumulado" id="retorno_acumulado">
                     </label>
+                    </div>
                 </div>
 
                 <div class="header">
