@@ -84,6 +84,9 @@
             margin-top: 10px;
             align-self: flex-start;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -157,34 +160,92 @@
                             <label for="recebido" class="label-inline">Recebido:
                                 <input type="number" step=".01" min="0" class="input-inline" id="recebido">
                             </label>
-                            <div class="column">
+                            <div class="column hidden" id="inputGroup2">
                                 <label for="mesc2" class="label-inline">Mês:
                                     <input type="month" class="input-inline" id="mesc2">
                                 </label>
-                            </div>
-                            <div class="column">
                                 <label for="recebido2" class="label-inline">Recebido:
                                     <input type="number" step=".01" min="0" class="input-inline" id="recebido2">
                                 </label>
                             </div>
-                            <div class="column">
+                            <div class="column hidden" id="inputGroup3">
                                 <label for="mesc3" class="label-inline">Mês:
                                     <input type="month" class="input-inline" id="mesc3">
                                 </label>
-                            </div>
-                            <div class="column">
                                 <label for="recebido3" class="label-inline">Recebido:
                                     <input type="number" step=".01" min="0" class="input-inline" id="recebido3">
                                 </label>
                             </div>
-                            <div class="column">
+                            <div class="column hidden" id="inputGroup4">
                                 <label for="mesc4" class="label-inline">Mês:
                                     <input type="month" class="input-inline" id="mesc4">
                                 </label>
-                            </div>
-                            <div class="column">
                                 <label for="recebido4" class="label-inline">Recebido:
                                     <input type="number" step=".01" min="0" class="input-inline" id="recebido4">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup5">
+                                <label for="mesc5" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc5">
+                                </label>
+                                <label for="recebido5" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido5">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup6">
+                                <label for="mesc6" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc6">
+                                </label>
+                                <label for="recebido6" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido6">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup7">
+                                <label for="mesc7" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc7">
+                                </label>
+                                <label for="recebido7" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido7">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup8">
+                                <label for="mesc8" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc8">
+                                </label>
+                                <label for="recebido8" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido8">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup9">
+                                <label for="mesc9" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc9">
+                                </label>
+                                <label for="recebido9" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido9">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup10">
+                                <label for="mesc10" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc10">
+                                </label>
+                                <label for="recebido10" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido10">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup11">
+                                <label for="mesc11" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc11">
+                                </label>
+                                <label for="recebido11" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido11">
+                                </label>
+                            </div>
+                            <div class="column hidden" id="inputGroup12">
+                                <label for="mesc12" class="label-inline">Mês:
+                                    <input type="month" class="input-inline" id="mesc12">
+                                </label>
+                                <label for="recebido12" class="label-inline">Recebido:
+                                    <input type="number" step=".01" min="0" class="input-inline" id="recebido12">
                                 </label>
                             </div>
                         </div>
@@ -825,6 +886,27 @@
                 }
             });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Liste todos os grupos de input de 2 a 12
+            const inputGroups = [];
+            for (let i = 2; i <= 12; i++) {
+                const group = document.getElementById(`inputGroup${i}`);
+                if (group) {
+                    inputGroups.push(group);
+                }
+            }
+
+            let currentIndex = 0;
+            const buttonAddValue = document.getElementById('addValueButton');
+
+            buttonAddValue.addEventListener('click', function() {
+                if (currentIndex < inputGroups.length) {
+                    inputGroups[currentIndex].classList.remove('hidden');
+                    currentIndex++;
+                }
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             const monthInputs = ['mes', 'mesc2', 'mesc3', 'mesc4'];
             const tspans = ['mes1', 'mes2', 'mes3', 'mes4'];
